@@ -133,6 +133,26 @@ kover {
 }
 
 tasks {
+    withType<KotlinCompile> {
+        dependsOn(generateParser)
+    }
+
+    generateLexer {
+        sourceFile.set(file("src/main/kotlin/com/github/xepozz/php_opcodes_language/language/parser/PHPOp.flex"))
+        targetOutputDir.set(file("src/main/gen/com/github/xepozz/php_opcodes_language/language/parser"))
+        purgeOldFiles.set(true)
+    }
+
+    generateParser {
+        dependsOn(generateLexer)
+
+        sourceFile.set(file("src/main/kotlin/com/github/xepozz/php_opcodes_language/language/parser/PHPOp.bnf"))
+        targetRootOutputDir.set(file("src/main/gen"))
+        pathToParser.set("/com/github/xepozz/php_opcodes_language/language/parser/PHPOpParser")
+        pathToPsiRoot.set("/com/github/xepozz/php_opcodes_language/language/psi")
+        purgeOldFiles.set(true)
+    }
+
     wrapper {
         gradleVersion = providers.gradleProperty("gradleVersion").get()
     }

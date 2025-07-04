@@ -9,6 +9,37 @@
     <resource-bundle>messages.MyBundle</resource-bundle>
 
     <extensions defaultExtensionNs="com.intellij">
+        <fileType
+                name="PHP Opcodes"
+                implementationClass="com.github.xepozz.php_opcodes_language.language.PHPOpFileType"
+                language="PHP Opcodes"
+        />
+        <lang.parserDefinition
+                language="PHP Opcodes"
+                implementationClass="com.github.xepozz.php_opcodes_language.language.parser.PHPOpParserDefinition"/>
+        <lang.syntaxHighlighterFactory
+                language="PHP Opcodes"
+                implementationClass="com.github.xepozz.php_opcodes_language.language.PHPOpSyntaxHighlighterFactory"/>
+        <annotator
+                language="PHP Opcodes"
+                implementationClass="com.github.xepozz.php_opcodes_language.language.PHPOpAnnotator"/>
 
+        <lang.elementManipulator
+                forClass="com.github.xepozz.php_opcodes_language.language.psi.impl.PHPOpElementImpl"
+                implementationClass="com.github.xepozz.php_opcodes_language.language.psi.PHPOpElementManipulator"/>
+        <lang.braceMatcher
+                language="PHP Opcodes"
+                implementationClass="com.github.xepozz.php_opcodes_language.language.PHPOpBraceMatcher"/>
+        <lang.commenter
+                language="PHP Opcodes"
+                implementationClass="com.github.xepozz.php_opcodes_language.language.PHPOpCommenter"/>
+
+        <lang.documentationProvider
+                language="PHP Opcodes"
+                implementationClass="com.github.xepozz.php_opcodes_language.language.documentation.PHPOpDocumentationProvider"/>
+
+        <lang.foldingBuilder
+                language="PHP Opcodes"
+                implementationClass="com.github.xepozz.php_opcodes_language.language.PHPOpFoldingBuilder"/>
     </extensions>
 </idea-plugin>

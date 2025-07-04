@@ -1,0 +1,36 @@
+{
+  parserClass="com.github.xepozz.php_opcodes_language.language.parser.PHPOpParser"
+  extends="com.intellij.extapi.psi.ASTWrapperPsiElement"
+
+  psiClassPrefix="PHPOp"
+  psiImplClassSuffix="Impl"
+  psiPackage="com.github.xepozz.php_opcodes_language.language.psi"
+  psiImplPackage="com.github.xepozz.php_opcodes_language.language.psi.impl"
+  psiImplUtilClass="com.github.xepozz.php_opcodes_language.language.psi.impl.PHPOpPsiImplUtil"
+
+  elementTypeHolderClass="com.github.xepozz.php_opcodes_language.language.psi.PHPOpTypes"
+  elementTypeClass="com.github.xepozz.php_opcodes_language.language.psi.PHPOpElementType"
+  tokenTypeClass="com.github.xepozz.php_opcodes_language.language.psi.PHPOpTokenType"
+
+  tokens = [
+    LBRACE = "LBRACE {"
+    RBRACE = "RBRACE }"
+    LPAREN = "LPAREN ("
+    RPAREN = "RPAREN )"
+    LBRACKET = "LBRACKET ["
+    RBRACKET = "RBRACKET ]"
+    COMMENT = "COMMENT"
+    EOL = "EOL"
+    SYMBOL = "SYMBOL"
+    IDENTIFIER = "IDENTIFIER"
+    NUMBER = "NUMBER"
+    TEXT = "TEXT"
+  ]
+}
+
+// Top level structure
+phpOpFile ::= item_*
+
+private item_ ::= internal
+
+internal ::= COMMENT | EOL
