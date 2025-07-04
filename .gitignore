@@ -2,4 +2,6 @@
 .idea
 .intellijPlatform
 .qodana
+.kotlin
 build
+/src/main/gen/
