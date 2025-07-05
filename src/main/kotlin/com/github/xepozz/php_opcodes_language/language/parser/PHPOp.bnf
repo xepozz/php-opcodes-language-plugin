@@ -47,12 +47,14 @@ statement ::= NUMBER (assignment_instruction | instruction)
 
 assignment_instruction ::= IDENTIFIER EQUALS_SIGN instruction
 
-instruction ::= IDENTIFIER argument? argument?
+instruction ::= instruction_name argument? argument?
+
+instruction_name ::= IDENTIFIER
 
 argument ::= expr
 
-private expr ::= var_name | TEXT | NUMBER | IDENTIFIER paren_expr | IDENTIFIER
+expr ::= var_name | TEXT | NUMBER | IDENTIFIER paren_expr | IDENTIFIER
 
 paren_expr ::= LPAREN expr RPAREN
 
-private var_name ::= DOLLAR_SIGN IDENTIFIER
+var_name ::= DOLLAR_SIGN IDENTIFIER
