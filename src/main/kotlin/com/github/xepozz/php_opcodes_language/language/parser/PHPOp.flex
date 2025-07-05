@@ -24,16 +24,15 @@ import java.util.Stack;
 // Common macros
 WHITESPACE = [ \t\f]
 NEWLINE = \r\n|\r|\n
-COMMENT = "#"[^\n]*
+COMMENT = ";"[^\n]*
 
 // Identifier patterns
-IDENTIFIER = [a-zA-Z][a-zA-Z0-9_\-]*
+IDENTIFIER = [_a-zA-Z][a-zA-Z0-9_\-]*
 NUMBER = [0-9]+
-TEXT = [^\s{\}(\)\[\]<\>\|\#\'\`\-\+\?\@][^\s{\}(\)\[\]<\>]*
+//TEXT = [^\s{\}(\)\[\]<\>\|\#\'\`\-\+\?\@][^\s{\}(\)\[\]<\>]*
 SYMBOL = [\-\+\~\?\<\>\@]
 
 QUOTTED_STRING = "\""(\\\"|[^\"])*"\""
-BACKTICK_STRING = "`"(\\\`|[^\`])*"`"
 
 // Special symbols
 LBRACE = "{"
@@ -42,6 +41,9 @@ LPAREN = "("
 RPAREN = ")"
 LBRACKET = "["
 RBRACKET = "]"
+DOLLAR_SIGN = "$"
+EQUALS_SIGN = "="
+COLON = ":"
 
 %{
 private Stack<Integer> stack = new Stack<>();
@@ -59,26 +61,30 @@ public void yypopState() {
 %%
 
 <YYINITIAL, IN_BLOCK> {
-{LBRACE}                                     { yypushState(IN_BLOCK); return PHPOpTypes.LBRACE; }
-{RBRACE}                                     { yypopState(); return PHPOpTypes.RBRACE; }
+    {LBRACE}                                     { yypushState(IN_BLOCK); return PHPOpTypes.LBRACE; }
+    {RBRACE}                                     { yypopState(); return PHPOpTypes.RBRACE; }
 
-// Special symbols
-{LPAREN}                                     { return PHPOpTypes.LPAREN; }
-{RPAREN}                                     { return PHPOpTypes.RPAREN; }
-{LBRACKET}                                   { return PHPOpTypes.LBRACKET; }
-{RBRACKET}                                   { return PHPOpTypes.RBRACKET; }
+    // Special symbols
+    {LPAREN}                                     { return PHPOpTypes.LPAREN; }
+    {RPAREN}                                     { return PHPOpTypes.RPAREN; }
+    {LBRACKET}                                   { return PHPOpTypes.LBRACKET; }
+    {RBRACKET}                                   { return PHPOpTypes.RBRACKET; }
+    {DOLLAR_SIGN}                                { return PHPOpTypes.DOLLAR_SIGN; }
+    {EQUALS_SIGN}                                { return PHPOpTypes.EQUALS_SIGN; }
 
-// Common elements
-{IDENTIFIER}                                 { return PHPOpTypes.IDENTIFIER; }
-{NUMBER}                                     { return PHPOpTypes.NUMBER; }
-{SYMBOL}                                     { return PHPOpTypes.SYMBOL; }
-{TEXT}|{QUOTTED_STRING}|{BACKTICK_STRING}    { return PHPOpTypes.TEXT; }
+    // Common elements
+    {IDENTIFIER}                                     { return PHPOpTypes.IDENTIFIER; }
+    {COLON}                                     { return PHPOpTypes.COLON; }
+    {NUMBER}                                     { return PHPOpTypes.NUMBER; }
+    {SYMBOL}                                     { return PHPOpTypes.SYMBOL; }
+//    {TEXT}|{QUOTTED_STRING}                      { return PHPOpTypes.TEXT; }
+    {QUOTTED_STRING}                      { return PHPOpTypes.TEXT; }
 
-// Whitespace and comments
-{WHITESPACE}                                 { return TokenType.WHITE_SPACE; }
-{NEWLINE}                                    { return PHPOpTypes.EOL; }
-{COMMENT}                                    { return PHPOpTypes.COMMENT; }
+    // Whitespace and comments
+    {WHITESPACE}                                 { return TokenType.WHITE_SPACE; }
+    {NEWLINE}                                    { return PHPOpTypes.EOL; }
+    {COMMENT}                                    { return PHPOpTypes.COMMENT; }
 }
 
 // Catch any other character
-[^]                                            { return TokenType.BAD_CHARACTER; }
+[^]                                             { return TokenType.BAD_CHARACTER; }

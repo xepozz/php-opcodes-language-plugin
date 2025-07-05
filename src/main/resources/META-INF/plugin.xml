@@ -13,6 +13,7 @@
                 name="PHP Opcodes"
                 implementationClass="com.github.xepozz.php_opcodes_language.language.PHPOpFileType"
                 language="PHP Opcodes"
+                extensions="phpo"
         />
         <lang.parserDefinition
                 language="PHP Opcodes"

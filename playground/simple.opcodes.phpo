@@ -1,0 +1,15 @@
+
+$_main:
+     ; (lines=10, args=0, vars=3, tmps=5)
+     ; (before optimizer)
+     ; /Users/xepozz/IdeaProjects/xepozz/php-opcodes-lang-plugin/playground/simple.php:1-8
+0000 EXT_STMT
+0001 ASSIGN CV0($var1) int(1)
+0002 EXT_STMT
+0003 ASSIGN CV1($var2) int(2)
+0004 EXT_STMT
+0005 T5 = ADD CV0($var1) CV1($var2)
+0006 ASSIGN CV2($var3) T5
+0007 EXT_STMT
+0008 ECHO string("test")
+0009 RETURN int(1)

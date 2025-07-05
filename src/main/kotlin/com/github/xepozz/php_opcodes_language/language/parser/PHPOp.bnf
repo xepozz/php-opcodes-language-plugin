@@ -24,13 +24,35 @@
     SYMBOL = "SYMBOL"
     IDENTIFIER = "IDENTIFIER"
     NUMBER = "NUMBER"
+    DOLLAR_SIGN = "DOLLAR_SIGN"
+    EQUALS_SIGN = "EQUALS_SIGN"
     TEXT = "TEXT"
+    IDENTIFIER = "IDENTIFIER"
+    COLON = "COLON"
   ]
 }
 
 // Top level structure
 phpOpFile ::= item_*
 
-private item_ ::= internal
+private item_ ::= block | COMMENT | EOL
 
-internal ::= COMMENT | EOL
+block ::= block_name COLON statements
+
+block_name ::= var_name
+
+statements ::= (statement | COMMENT EOL | EOL)+
+
+statement ::= NUMBER (assignment_instruction | instruction)
+
+assignment_instruction ::= IDENTIFIER EQUALS_SIGN instruction
+
+instruction ::= IDENTIFIER argument? argument?
+
+argument ::= expr
+
+private expr ::= var_name | TEXT | NUMBER | IDENTIFIER paren_expr | IDENTIFIER
+
+paren_expr ::= LPAREN expr RPAREN
+
+private var_name ::= DOLLAR_SIGN IDENTIFIER
