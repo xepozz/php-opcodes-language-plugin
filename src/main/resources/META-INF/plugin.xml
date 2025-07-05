@@ -43,5 +43,9 @@
         <lang.foldingBuilder
                 language="PHP Opcodes"
                 implementationClass="com.github.xepozz.php_opcodes_language.language.PHPOpFoldingBuilder"/>
+
+        <psi.referenceContributor
+                language="PHP Opcodes"
+                implementation="com.github.xepozz.php_opcodes_language.language.reference.PHPOpReferenceContributor"/>
     </extensions>
 </idea-plugin>

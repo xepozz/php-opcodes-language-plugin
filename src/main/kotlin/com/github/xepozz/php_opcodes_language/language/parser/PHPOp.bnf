@@ -53,8 +53,18 @@ instruction_name ::= IDENTIFIER
 
 argument ::= expr
 
-expr ::= var_name | TEXT | NUMBER | IDENTIFIER paren_expr | IDENTIFIER
+expr ::= var_name | string_literal | NUMBER | IDENTIFIER paren_expr | IDENTIFIER
+
+string_literal ::= TEXT
+{
+    implements=["com.intellij.psi.PsiLanguageInjectionHost"]
+    extends="com.github.xepozz.php_opcodes_language.language.psi.impl.PHPOpStringLiteralBaseImpl"
+}
 
 paren_expr ::= LPAREN expr RPAREN
 
 var_name ::= DOLLAR_SIGN IDENTIFIER
+{
+  implements=["com.intellij.psi.NavigatablePsiElement" "com.intellij.psi.PsiNamedElement" "com.intellij.psi.PsiPolyVariantReference"]
+  extends="com.github.xepozz.php_opcodes_language.language.psi.impl.PHPOpVarNameBaseImpl"
+}
