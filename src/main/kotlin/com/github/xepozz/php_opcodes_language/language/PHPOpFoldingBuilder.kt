@@ -20,7 +20,7 @@ class PHPOpFoldingBuilder : FoldingBuilderEx(), DumbAware {
             .map {
                 FoldingDescriptor(
                     it.node,
-                    TextRange(it.blockName.textRange.endOffset + 1, it.textRange.endOffset)
+                    TextRange(it.blockName.textRange.endOffset + 1, it.textRange.endOffset - 1)
                 )
             }
 
