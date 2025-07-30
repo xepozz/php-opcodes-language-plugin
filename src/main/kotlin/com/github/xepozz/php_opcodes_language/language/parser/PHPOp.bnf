@@ -33,22 +33,29 @@ phpOpFile ::= item_*
 private item_ ::= block | COMMENT | EOL
 
 block ::= block_name COLON statements
-
 block_name ::= var_name | string_literal | IDENTIFIER COLON COLON IDENTIFIER | IDENTIFIER
 
 statements ::= (statement | COMMENT | EOL)+
-
 statement ::= NUMBER (assignment_instruction | instruction) | live_range
 
-assignment_instruction ::= IDENTIFIER EQUALS_SIGN instruction
-
+assignment_instruction ::= parameter EQUALS_SIGN instruction
 instruction ::= instruction_name argument*
-
 instruction_name ::= IDENTIFIER
 
 argument ::= expr | paren_expr
+private expr ::= var_name | string_literal | NUMBER | paren_parameter | parameter | EQUALS_SIGN
 
-expr ::= var_name | string_literal | NUMBER | IDENTIFIER paren_expr | IDENTIFIER | EQUALS_SIGN
+paren_parameter ::= IDENTIFIER paren_expr
+{
+    implements=["com.intellij.psi.NavigatablePsiElement" "com.intellij.psi.PsiNamedElement" "com.intellij.psi.PsiPolyVariantReference"]
+    extends="com.github.xepozz.php_opcodes_language.language.psi.impl.PHPOpParenParameterBaseImpl"
+}
+
+parameter ::= IDENTIFIER
+{
+    implements=["com.intellij.psi.NavigatablePsiElement" "com.intellij.psi.PsiNamedElement" "com.intellij.psi.PsiPolyVariantReference"]
+    extends="com.github.xepozz.php_opcodes_language.language.psi.impl.PHPOpParameterBaseImpl"
+}
 
 string_literal ::= TEXT
 {
@@ -60,8 +67,8 @@ paren_expr ::= LPAREN expr RPAREN
 
 var_name ::= DOLLAR_SIGN IDENTIFIER
 {
-  implements=["com.intellij.psi.NavigatablePsiElement" "com.intellij.psi.PsiNamedElement" "com.intellij.psi.PsiPolyVariantReference"]
-  extends="com.github.xepozz.php_opcodes_language.language.psi.impl.PHPOpVarNameBaseImpl"
+    implements=["com.intellij.psi.NavigatablePsiElement" "com.intellij.psi.PsiNamedElement" "com.intellij.psi.PsiPolyVariantReference"]
+    extends="com.github.xepozz.php_opcodes_language.language.psi.impl.PHPOpVarNameBaseImpl"
 }
 
 live_range ::= 'LIVE RANGES:' live_range_statements

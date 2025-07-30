@@ -1,6 +1,7 @@
 package com.github.xepozz.php_opcodes_language.language
 
 import com.github.xepozz.php_opcodes_language.language.psi.PHPOpInstructionName
+import com.github.xepozz.php_opcodes_language.language.psi.PHPOpParameter
 import com.github.xepozz.php_opcodes_language.language.psi.PHPOpVarName
 import com.intellij.lang.annotation.AnnotationHolder
 import com.intellij.lang.annotation.Annotator
@@ -17,6 +18,14 @@ class PHPOpAnnotator : Annotator {
                     .range(element)
                     .textAttributes(PhpHighlightingData.VAR)
                     .create()
+            }
+            is PHPOpParameter -> {
+                if (element.text.matches(Regex("[TV]\\d+"))) {
+                    holder.newSilentAnnotation(HighlightSeverity.INFORMATION)
+                        .range(element)
+                        .textAttributes(PhpHighlightingData.VAR)
+                        .create()
+                }
             }
 
             is PHPOpInstructionName -> {
