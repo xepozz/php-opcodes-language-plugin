@@ -13,15 +13,10 @@
   tokenTypeClass="com.github.xepozz.php_opcodes_language.language.psi.PHPOpTokenType"
 
   tokens = [
-    LBRACE = "LBRACE {"
-    RBRACE = "RBRACE }"
     LPAREN = "LPAREN ("
     RPAREN = "RPAREN )"
-    LBRACKET = "LBRACKET ["
-    RBRACKET = "RBRACKET ]"
     COMMENT = "COMMENT"
     EOL = "EOL"
-    SYMBOL = "SYMBOL"
     IDENTIFIER = "IDENTIFIER"
     NUMBER = "NUMBER"
     DOLLAR_SIGN = "DOLLAR_SIGN"
@@ -29,10 +24,10 @@
     TEXT = "TEXT"
     IDENTIFIER = "IDENTIFIER"
     COLON = "COLON"
+    DASH = "DASH"
   ]
 }
 
-// Top level structure
 phpOpFile ::= item_*
 
 private item_ ::= block | COMMENT | EOL
@@ -53,7 +48,7 @@ instruction_name ::= IDENTIFIER
 
 argument ::= expr | paren_expr
 
-expr ::= var_name | string_literal | NUMBER | IDENTIFIER paren_expr | IDENTIFIER | '='
+expr ::= var_name | string_literal | NUMBER | IDENTIFIER paren_expr | IDENTIFIER | EQUALS_SIGN
 
 string_literal ::= TEXT
 {
@@ -73,5 +68,5 @@ live_range ::= 'LIVE RANGES:' live_range_statements
 live_range_statements ::= (live_range_statement | EOL)*
 
 live_range_statement ::= NUMBER COLON live_range_range LPAREN live_type RPAREN
-live_range_range ::= NUMBER '-' NUMBER
+live_range_range ::= NUMBER DASH NUMBER
 live_type::= IDENTIFIER (SLASH IDENTIFIER)?

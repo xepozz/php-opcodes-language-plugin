@@ -18,33 +18,22 @@ import java.util.Stack;
 %eof{  return;
 %eof}
 
-%state YYINITIAL
-%state IN_BLOCK
 
-// Common macros
 WHITESPACE = [ \t\f]
 NEWLINE = \r\n|\r|\n
 COMMENT = ";"[^\n]*
 
-// Identifier patterns
 IDENTIFIER = [_a-zA-Z][a-zA-Z0-9_\-\\]*
 NUMBER = [0-9]+
-//TEXT = [^\s{\}(\)\[\]<\>\|\#\'\`\-\+\?\@][^\s{\}(\)\[\]<\>]*
-SYMBOL = [\-\+\~\?\<\>\@]
-
 QUOTTED_STRING = "\""(\\\"|[^\"])*"\""
 
-// Special symbols
-LBRACE = "{"
-RBRACE = "}"
 LPAREN = "("
 RPAREN = ")"
-LBRACKET = "["
-RBRACKET = "]"
 DOLLAR_SIGN = "$"
 EQUALS_SIGN = "="
 COLON = ":"
 SLASH = "/"
+DASH = "-"
 
 %{
 private Stack<Integer> stack = new Stack<>();
@@ -59,34 +48,28 @@ public void yypopState() {
 }
 %}
 
+
+%state YYINITIAL
+
 %%
 
-<YYINITIAL, IN_BLOCK> {
-    {LBRACE}                                     { yypushState(IN_BLOCK); return PHPOpTypes.LBRACE; }
-    {RBRACE}                                     { yypopState(); return PHPOpTypes.RBRACE; }
-
-    // Special symbols
+<YYINITIAL> {
     {LPAREN}                                     { return PHPOpTypes.LPAREN; }
     {RPAREN}                                     { return PHPOpTypes.RPAREN; }
-    {LBRACKET}                                   { return PHPOpTypes.LBRACKET; }
-    {RBRACKET}                                   { return PHPOpTypes.RBRACKET; }
     {DOLLAR_SIGN}                                { return PHPOpTypes.DOLLAR_SIGN; }
     {EQUALS_SIGN}                                { return PHPOpTypes.EQUALS_SIGN; }
 
-    // Common elements
-    {IDENTIFIER}                                     { return PHPOpTypes.IDENTIFIER; }
-    {COLON}                                     { return PHPOpTypes.COLON; }
-    {SLASH}                                     { return PHPOpTypes.SLASH; }
+    {IDENTIFIER}                                 { return PHPOpTypes.IDENTIFIER; }
+    {COLON}                                      { return PHPOpTypes.COLON; }
+    {SLASH}                                      { return PHPOpTypes.SLASH; }
+    {DASH}                                       { return PHPOpTypes.DASH; }
     {NUMBER}                                     { return PHPOpTypes.NUMBER; }
-    {SYMBOL}                                     { return PHPOpTypes.SYMBOL; }
-//    {TEXT}|{QUOTTED_STRING}                      { return PHPOpTypes.TEXT; }
-    {QUOTTED_STRING}                      { return PHPOpTypes.TEXT; }
+    {QUOTTED_STRING}                             { return PHPOpTypes.TEXT; }
 
-    // Whitespace and comments
     {WHITESPACE}                                 { return TokenType.WHITE_SPACE; }
     {NEWLINE}                                    { return PHPOpTypes.EOL; }
     {COMMENT}                                    { return PHPOpTypes.COMMENT; }
 }
 
 // Catch any other character
-[^]                                             { return TokenType.BAD_CHARACTER; }
+[^]                                              { return TokenType.BAD_CHARACTER; }
