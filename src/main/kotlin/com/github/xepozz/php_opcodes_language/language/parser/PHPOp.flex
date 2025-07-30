@@ -27,7 +27,7 @@ NEWLINE = \r\n|\r|\n
 COMMENT = ";"[^\n]*
 
 // Identifier patterns
-IDENTIFIER = [_a-zA-Z][a-zA-Z0-9_\-]*
+IDENTIFIER = [_a-zA-Z][a-zA-Z0-9_\-\\]*
 NUMBER = [0-9]+
 //TEXT = [^\s{\}(\)\[\]<\>\|\#\'\`\-\+\?\@][^\s{\}(\)\[\]<\>]*
 SYMBOL = [\-\+\~\?\<\>\@]
@@ -44,6 +44,7 @@ RBRACKET = "]"
 DOLLAR_SIGN = "$"
 EQUALS_SIGN = "="
 COLON = ":"
+SLASH = "/"
 
 %{
 private Stack<Integer> stack = new Stack<>();
@@ -75,6 +76,7 @@ public void yypopState() {
     // Common elements
     {IDENTIFIER}                                     { return PHPOpTypes.IDENTIFIER; }
     {COLON}                                     { return PHPOpTypes.COLON; }
+    {SLASH}                                     { return PHPOpTypes.SLASH; }
     {NUMBER}                                     { return PHPOpTypes.NUMBER; }
     {SYMBOL}                                     { return PHPOpTypes.SYMBOL; }
 //    {TEXT}|{QUOTTED_STRING}                      { return PHPOpTypes.TEXT; }
