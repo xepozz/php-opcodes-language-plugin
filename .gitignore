@@ -5,3 +5,5 @@
 .kotlin
 build
 /src/main/gen/
+.env
+
