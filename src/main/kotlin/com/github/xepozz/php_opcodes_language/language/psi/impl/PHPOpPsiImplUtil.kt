@@ -6,5 +6,6 @@ class PHPOpPsiImplUtil {
     companion object {
         @JvmStatic
         fun isVariable(element: PHPOpParameter): Boolean = element.text.startsWith("$")
+        fun isVariable(element: PHPOpParameter): Boolean = element.text.matches(Regex("[TV]\\d+"))
     }
 }
