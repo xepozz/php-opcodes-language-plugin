@@ -7,7 +7,7 @@ import com.intellij.lang.ASTNode
 import com.intellij.psi.LiteralTextEscaper
 import com.intellij.psi.PsiLanguageInjectionHost
 
-abstract class PHPOpStringLiteralBaseImpl : PHPOpStringLiteral, PHPOpElementImpl, PsiLanguageInjectionHost {
+abstract class PHPOpStringLiteralBaseImpl : PHPOpStringLiteral, PHPOpElementImpl {
     constructor(node: ASTNode) : super(node)
 
     override fun getPresentation() = PresentationData(text, null, getIcon(0), null)
@@ -22,4 +22,6 @@ abstract class PHPOpStringLiteralBaseImpl : PHPOpStringLiteral, PHPOpElementImpl
     }
 
     override fun createLiteralTextEscaper() = LiteralTextEscaper.createSimple(this)
+
+    override fun getValue(): String = text
 }

@@ -67,7 +67,7 @@ parameter ::= IDENTIFIER
 
 string_literal ::= TEXT
 {
-    implements=["com.intellij.psi.PsiLanguageInjectionHost"]
+    implements=["com.intellij.psi.PsiLanguageInjectionHost" "com.intellij.psi.PsiLiteralValue"]
     extends="com.github.xepozz.php_opcodes_language.language.psi.impl.PHPOpStringLiteralBaseImpl"
 }
 
