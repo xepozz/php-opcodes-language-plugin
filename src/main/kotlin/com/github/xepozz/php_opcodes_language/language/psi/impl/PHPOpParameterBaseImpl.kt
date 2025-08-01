@@ -42,10 +42,11 @@ abstract class PHPOpParameterBaseImpl : PHPOpParameter, PHPOpElementImpl {
         throw UnsupportedOperationException("Method bindToElement is not yet implemented in " + this.javaClass.getName())
     }
 
-    override fun isReferenceTo(psiElement: PsiElement): Boolean {
-        return when (psiElement) {
-            is PHPOpParameter -> this.text == psiElement.text
-            else -> false
+    override fun isReferenceTo(psiElement: PsiElement) = when (psiElement) {
+        !is PHPOpParameter -> false
+        else -> when (true) {
+            !psiElement.isVariable -> false
+            else -> this.text == psiElement.text
         }
     }
 

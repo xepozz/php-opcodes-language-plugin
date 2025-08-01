@@ -39,8 +39,7 @@ statements ::= (statement | COMMENT | EOL)+
 statement ::= NUMBER (assignment_instruction | instruction) | live_range
 
 assignment_instruction ::= parameter EQUALS_SIGN instruction
-instruction ::= instruction_name argument*
-instruction_name ::= IDENTIFIER
+instruction ::= parameter argument*
 
 argument ::= expr | paren_expr
 private expr ::= var_name | string_literal | NUMBER | paren_parameter | parameter | EQUALS_SIGN
@@ -55,6 +54,7 @@ parameter ::= IDENTIFIER
 {
     implements=["com.intellij.psi.NavigatablePsiElement" "com.intellij.psi.PsiNamedElement" "com.intellij.psi.PsiPolyVariantReference"]
     extends="com.github.xepozz.php_opcodes_language.language.psi.impl.PHPOpParameterBaseImpl"
+    methods=[isVariable]
 }
 
 string_literal ::= TEXT

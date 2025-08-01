@@ -1,8 +1,9 @@
 package com.github.xepozz.php_opcodes_language.language.documentation
 
-data class PHPOpcodeDoc(
+data class ParameterDoc(
     val name: String,
+    val number: Int,
     val description: String,
-    val syntax: String? = null,
-    val examples: String? = null
+    val example_php: String? = null,
+    val example_opcode: String? = null
 )
