@@ -33,7 +33,15 @@ phpOpFile ::= item_*
 private item_ ::= block | COMMENT | EOL
 
 block ::= block_name COLON statements
-block_name ::= var_name | string_literal | IDENTIFIER COLON COLON IDENTIFIER | IDENTIFIER
+block_name ::= var_name | string_literal | method_name | function_name
+{
+    implements=["com.intellij.psi.NavigatablePsiElement" "com.intellij.psi.PsiNamedElement" "com.intellij.psi.PsiLiteralValue"]
+    extends="com.github.xepozz.php_opcodes_language.language.psi.impl.PHPOpBlockNameBaseImpl"
+    methods=[isFunction isClass isClassMethod isMain]
+}
+
+private method_name ::= IDENTIFIER COLON COLON IDENTIFIER
+private function_name ::= IDENTIFIER
 
 statements ::= (statement | COMMENT | EOL)+
 statement ::= NUMBER (assignment_instruction | instruction) | live_range
