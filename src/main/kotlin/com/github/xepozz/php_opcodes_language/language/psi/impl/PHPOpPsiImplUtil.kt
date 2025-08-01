@@ -3,7 +3,6 @@ package com.github.xepozz.php_opcodes_language.language.psi.impl
 import com.github.xepozz.php_opcodes_language.language.psi.PHPOpBlockName
 import com.github.xepozz.php_opcodes_language.language.psi.PHPOpParameter
 import com.github.xepozz.php_opcodes_language.language.psi.PHPOpTypes
-import com.intellij.lang.tree.util.children
 
 class PHPOpPsiImplUtil {
     companion object {
@@ -12,7 +11,7 @@ class PHPOpPsiImplUtil {
 
         @JvmStatic
         fun isFunction(element: PHPOpBlockName): Boolean = element.node.let {
-            val children = it.children().toList()
+            val children = it.getChildren(null)
             children.size == 1
                     && children[0].elementType == PHPOpTypes.IDENTIFIER
                     && !children[0].text.contains("\\")
@@ -21,7 +20,7 @@ class PHPOpPsiImplUtil {
         // todo: check for class in a different way
         @JvmStatic
         fun isClass(element: PHPOpBlockName): Boolean = element.node.let {
-            val children = it.children().toList()
+            val children = it.getChildren(null)
             children.size == 1
                     && children[0].elementType == PHPOpTypes.IDENTIFIER
                     && children[0].text.contains("\\")
@@ -29,7 +28,7 @@ class PHPOpPsiImplUtil {
 
         @JvmStatic
         fun isClassMethod(element: PHPOpBlockName): Boolean = element.node.let {
-            val children = it.children().toList()
+            val children = it.getChildren(null)
             children.size == 4
                     && children[0].elementType == PHPOpTypes.IDENTIFIER
                     && children[1].elementType == PHPOpTypes.COLON
