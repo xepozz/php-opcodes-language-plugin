@@ -134,7 +134,7 @@ kover {
 
 tasks {
     withType<KotlinCompile> {
-        dependsOn(generateParser)
+//        dependsOn(generateParser)
     }
 
     generateLexer {
