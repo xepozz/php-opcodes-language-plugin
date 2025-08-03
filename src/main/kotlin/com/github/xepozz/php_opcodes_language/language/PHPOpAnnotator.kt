@@ -1,5 +1,6 @@
 package com.github.xepozz.php_opcodes_language.language
 
+import com.github.xepozz.php_opcodes_language.Opcodes
 import com.github.xepozz.php_opcodes_language.language.psi.PHPOpLineNumber
 import com.github.xepozz.php_opcodes_language.language.psi.PHPOpParameter
 import com.github.xepozz.php_opcodes_language.language.psi.PHPOpParenParameter
@@ -31,6 +32,7 @@ class PHPOpAnnotator : Annotator {
             is PHPOpParameter -> {
                 val attributesKey = when {
                     element.isVariable && element.parent !is PHPOpParenParameter -> PhpHighlightingData.VAR
+                    element.text == Opcodes.THIS.name -> PhpHighlightingData.THIS_VAR
                     else -> PhpHighlightingData.FUNCTION_CALL
                 }
 
