@@ -1,6 +1,7 @@
 package com.github.xepozz.php_opcodes_language.language.psi.impl
 
 import com.github.xepozz.php_opcodes_language.Opcodes
+import com.github.xepozz.php_opcodes_language.Primitives
 import com.github.xepozz.php_opcodes_language.language.psi.PHPOpBlock
 import com.github.xepozz.php_opcodes_language.language.psi.PHPOpParameter
 import com.intellij.icons.AllIcons
@@ -17,7 +18,9 @@ import com.jetbrains.php.lang.psi.PhpPsiUtil
 abstract class PHPOpParameterBaseImpl : PHPOpParameter, PHPOpElementImpl {
     constructor(node: ASTNode) : super(node)
 
-    override fun getName(): String = text
+    override fun getName(): String? = text.let {
+        if (isPrimitive(this)) null else text
+    }
 
     override fun setName(name: @NlsSafe String): PsiElement? {
         TODO("Not yet implemented")
@@ -47,6 +50,7 @@ abstract class PHPOpParameterBaseImpl : PHPOpParameter, PHPOpElementImpl {
         !is PHPOpParameter -> false
         else -> when {
             isSelfReferencable(this) && isSelfReferencable(psiElement) -> true
+            isPrimitive(this) || isPrimitive(psiElement) -> false
             !this.isVariable || !psiElement.isVariable -> false
             else -> this.text == psiElement.text
         }
@@ -55,6 +59,10 @@ abstract class PHPOpParameterBaseImpl : PHPOpParameter, PHPOpElementImpl {
     private fun isSelfReferencable(psiElement: PHPOpParameter): Boolean = Opcodes.selfReference
         .map { it.name }
         .contains(psiElement.text)
+
+    private fun isPrimitive(element: PHPOpParameter): Boolean = Primitives.entries
+        .map { it.name }
+        .contains(element.text)
 
     override fun isSoft() = false
 

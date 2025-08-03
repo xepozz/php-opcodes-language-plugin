@@ -1,6 +1,7 @@
 package com.github.xepozz.php_opcodes_language.language
 
 import com.github.xepozz.php_opcodes_language.Opcodes
+import com.github.xepozz.php_opcodes_language.Primitives
 import com.github.xepozz.php_opcodes_language.language.psi.PHPOpLineNumber
 import com.github.xepozz.php_opcodes_language.language.psi.PHPOpParameter
 import com.github.xepozz.php_opcodes_language.language.psi.PHPOpParenParameter
@@ -33,6 +34,7 @@ class PHPOpAnnotator : Annotator {
                 val attributesKey = when {
                     element.isVariable && element.parent !is PHPOpParenParameter -> PhpHighlightingData.VAR
                     element.text == Opcodes.THIS.name -> PhpHighlightingData.THIS_VAR
+                    isPrimitive(element) -> PhpHighlightingData.PRIMITIVE_TYPE_HINT
                     else -> PhpHighlightingData.FUNCTION_CALL
                 }
 
@@ -44,4 +46,8 @@ class PHPOpAnnotator : Annotator {
             }
         }
     }
+
+    private fun isPrimitive(element: PHPOpParameter): Boolean = Primitives.entries
+        .map { it.name }
+        .contains(element.text)
 }
