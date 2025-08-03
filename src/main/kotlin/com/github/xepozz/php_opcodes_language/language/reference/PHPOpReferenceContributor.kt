@@ -1,5 +1,6 @@
 package com.github.xepozz.php_opcodes_language.language.reference
 
+import com.github.xepozz.php_opcodes_language.language.psi.PHPOpLineNumber
 import com.github.xepozz.php_opcodes_language.language.psi.PHPOpParameter
 import com.github.xepozz.php_opcodes_language.language.psi.PHPOpParenParameter
 import com.github.xepozz.php_opcodes_language.language.psi.PHPOpVarName
@@ -16,6 +17,7 @@ class PHPOpReferenceContributor : PsiReferenceContributor() {
         registrar.registerReferenceProvider(
             PlatformPatterns.or(
                 PlatformPatterns.psiElement(PHPOpVarName::class.java),
+                PlatformPatterns.psiElement(PHPOpLineNumber::class.java),
                 PlatformPatterns.psiElement(PHPOpParameter::class.java),
                 PlatformPatterns.psiElement(PHPOpParenParameter::class.java),
             ),

@@ -1,5 +1,6 @@
 package com.github.xepozz.php_opcodes_language.language
 
+import com.github.xepozz.php_opcodes_language.language.psi.PHPOpLineNumber
 import com.github.xepozz.php_opcodes_language.language.psi.PHPOpParameter
 import com.github.xepozz.php_opcodes_language.language.psi.PHPOpParenParameter
 import com.github.xepozz.php_opcodes_language.language.psi.PHPOpVarName
@@ -17,6 +18,13 @@ class PHPOpAnnotator : Annotator {
                 holder.newSilentAnnotation(HighlightSeverity.INFORMATION)
                     .range(element)
                     .textAttributes(PhpHighlightingData.VAR)
+                    .create()
+            }
+
+            is PHPOpLineNumber -> {
+                holder.newSilentAnnotation(HighlightSeverity.INFORMATION)
+                    .range(element)
+                    .textAttributes(PhpHighlightingData.NUMBER)
                     .create()
             }
 
