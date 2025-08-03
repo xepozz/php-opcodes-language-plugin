@@ -46,11 +46,15 @@ abstract class PHPOpParameterBaseImpl : PHPOpParameter, PHPOpElementImpl {
     override fun isReferenceTo(psiElement: PsiElement) = when (psiElement) {
         !is PHPOpParameter -> false
         else -> when {
-            this.text == Opcodes.RETURN.name && psiElement.text == Opcodes.RETURN.name -> true
+            isSelfReferencable(this) && isSelfReferencable(psiElement) -> true
             !this.isVariable || !psiElement.isVariable -> false
             else -> this.text == psiElement.text
         }
     }
+
+    private fun isSelfReferencable(psiElement: PHPOpParameter): Boolean = Opcodes.selfReference
+        .map { it.name }
+        .contains(psiElement.text)
 
     override fun isSoft() = false
 
