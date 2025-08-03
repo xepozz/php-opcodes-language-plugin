@@ -1,5 +1,6 @@
 package com.github.xepozz.php_opcodes_language.language.psi.impl
 
+import com.github.xepozz.php_opcodes_language.Opcodes
 import com.github.xepozz.php_opcodes_language.language.psi.PHPOpBlock
 import com.github.xepozz.php_opcodes_language.language.psi.PHPOpParameter
 import com.intellij.icons.AllIcons
@@ -45,6 +46,7 @@ abstract class PHPOpParameterBaseImpl : PHPOpParameter, PHPOpElementImpl {
     override fun isReferenceTo(psiElement: PsiElement) = when (psiElement) {
         !is PHPOpParameter -> false
         else -> when {
+            this.text == Opcodes.RETURN.name && psiElement.text == Opcodes.RETURN.name -> true
             !this.isVariable || !psiElement.isVariable -> false
             else -> this.text == psiElement.text
         }
