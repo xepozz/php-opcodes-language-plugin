@@ -3,7 +3,6 @@ package com.github.xepozz.php_opcodes_language.language.psi.impl
 import com.github.xepozz.php_opcodes_language.language.psi.PHPOpBlock
 import com.github.xepozz.php_opcodes_language.language.psi.PHPOpParenParameter
 import com.github.xepozz.php_opcodes_language.language.psi.PHPOpTypes
-import com.github.xepozz.php_opcodes_language.language.psi.PHPOpVarName
 import com.intellij.icons.AllIcons
 import com.intellij.ide.projectView.PresentationData
 import com.intellij.lang.ASTNode
@@ -48,10 +47,11 @@ abstract class PHPOpParenParameterBaseImpl : PHPOpParenParameter, PHPOpElementIm
         throw UnsupportedOperationException("Method bindToElement is not yet implemented in " + this.javaClass.getName())
     }
 
-    override fun isReferenceTo(psiElement: PsiElement): Boolean {
-        return when (psiElement) {
-            is PHPOpVarName -> this.text == psiElement.text
-            else -> false
+    override fun isReferenceTo(psiElement: PsiElement) = when (psiElement) {
+        !is PHPOpParenParameter -> false
+        else -> when {
+            !this.parameter.isVariable || !psiElement.parameter.isVariable -> false
+            else -> this.text == psiElement.text
         }
     }
 

@@ -7,7 +7,7 @@ import com.github.xepozz.php_opcodes_language.language.psi.PHPOpTypes
 class PHPOpPsiImplUtil {
     companion object {
         @JvmStatic
-        fun isVariable(element: PHPOpParameter): Boolean = element.text.matches(Regex("[TV]\\d+"))
+        fun isVariable(element: PHPOpParameter): Boolean = element.text.matches(Regex("(?:[TV]|CV)\\d+"))
 
         @JvmStatic
         fun isFunction(element: PHPOpBlockName): Boolean = element.node.let {

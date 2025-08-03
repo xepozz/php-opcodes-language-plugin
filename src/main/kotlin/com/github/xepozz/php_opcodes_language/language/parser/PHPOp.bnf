@@ -46,13 +46,13 @@ private function_name ::= IDENTIFIER
 statements ::= (statement | COMMENT | EOL)+
 statement ::= NUMBER (assignment_instruction | instruction) | live_range
 
-assignment_instruction ::= parameter EQUALS_SIGN instruction
+assignment_instruction ::= (paren_parameter | parameter) EQUALS_SIGN instruction
 instruction ::= parameter argument*
 
 argument ::= expr | paren_expr
-private expr ::= var_name | string_literal | NUMBER | paren_parameter | parameter | EQUALS_SIGN
+private expr ::= var_name | string_literal | NUMBER | paren_parameter | parameter
 
-paren_parameter ::= IDENTIFIER paren_expr
+paren_parameter ::= parameter paren_expr
 {
     implements=["com.intellij.psi.NavigatablePsiElement" "com.intellij.psi.PsiNamedElement" "com.intellij.psi.PsiPolyVariantReference"]
     extends="com.github.xepozz.php_opcodes_language.language.psi.impl.PHPOpParenParameterBaseImpl"

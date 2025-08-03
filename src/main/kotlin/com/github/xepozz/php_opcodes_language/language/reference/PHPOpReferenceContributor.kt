@@ -1,6 +1,7 @@
 package com.github.xepozz.php_opcodes_language.language.reference
 
 import com.github.xepozz.php_opcodes_language.language.psi.PHPOpParameter
+import com.github.xepozz.php_opcodes_language.language.psi.PHPOpParenParameter
 import com.github.xepozz.php_opcodes_language.language.psi.PHPOpVarName
 import com.intellij.patterns.PlatformPatterns
 import com.intellij.psi.PsiElement
@@ -15,7 +16,8 @@ class PHPOpReferenceContributor : PsiReferenceContributor() {
         registrar.registerReferenceProvider(
             PlatformPatterns.or(
                 PlatformPatterns.psiElement(PHPOpVarName::class.java),
-                PlatformPatterns.psiElement(PHPOpParameter::class.java)
+                PlatformPatterns.psiElement(PHPOpParameter::class.java),
+                PlatformPatterns.psiElement(PHPOpParenParameter::class.java),
             ),
             object : PsiReferenceProvider() {
                 override fun getReferencesByElement(

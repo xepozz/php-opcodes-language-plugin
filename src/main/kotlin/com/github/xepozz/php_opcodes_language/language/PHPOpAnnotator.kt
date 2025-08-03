@@ -1,6 +1,7 @@
 package com.github.xepozz.php_opcodes_language.language
 
 import com.github.xepozz.php_opcodes_language.language.psi.PHPOpParameter
+import com.github.xepozz.php_opcodes_language.language.psi.PHPOpParenParameter
 import com.github.xepozz.php_opcodes_language.language.psi.PHPOpVarName
 import com.intellij.lang.annotation.AnnotationHolder
 import com.intellij.lang.annotation.Annotator
@@ -18,11 +19,18 @@ class PHPOpAnnotator : Annotator {
                     .textAttributes(PhpHighlightingData.VAR)
                     .create()
             }
+
             is PHPOpParameter -> {
+                val attributesKey = when {
+                    element.isVariable && element.parent !is PHPOpParenParameter -> PhpHighlightingData.VAR
+                    else -> PhpHighlightingData.FUNCTION_CALL
+                }
+
                 holder.newSilentAnnotation(HighlightSeverity.INFORMATION)
                     .range(element)
-                    .textAttributes(if (element.isVariable) PhpHighlightingData.VAR else PhpHighlightingData.FUNCTION_CALL)
+                    .textAttributes(attributesKey)
                     .create()
+
             }
         }
     }
