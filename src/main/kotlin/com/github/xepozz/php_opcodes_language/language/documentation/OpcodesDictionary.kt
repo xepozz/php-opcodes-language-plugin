@@ -10,7 +10,7 @@ object OpcodesDictionary {
             number = 1,
             description = """Adds "value1" to "value2" and stores the result into "result"""",
             // language=injectablephp
-            example_php = $$"""
+            examplePhp = $$"""
                 <?php
 
                 $a = 1;
@@ -18,7 +18,7 @@ object OpcodesDictionary {
                 $c = $a + $b;
             """.trimIndent(),
             // language="PHP Opcodes"
-            example_opcode = $$"""
+            exampleOpcode = $$"""
                 $_main:
                 
                 0000 EXT_STMT

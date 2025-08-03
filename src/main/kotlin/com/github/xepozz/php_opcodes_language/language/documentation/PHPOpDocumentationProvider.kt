@@ -32,15 +32,15 @@ class PHPOpDocumentationProvider : AbstractDocumentationProvider() {
                 append("<div class='content'>")
                 append("<p>${doc.description}}</p>")
 
-                if (doc.example_php != null) {
+                if (doc.examplePhp != null) {
                     append("<h3>Example PHP</h3>")
-                    append("<pre>${highlighter.color("InjectablePHP", doc.example_php)}</pre>")
+                    append("<pre>${highlighter.color("InjectablePHP", doc.examplePhp)}</pre>")
                 }
 
-                if (doc.example_opcode != null) {
+                if (doc.exampleOpcode != null) {
                     append("<h3>Example Opcodes</h3>")
                     append("<pre>")
-                    append("<pre>${highlighter.color("PHP Opcodes", doc.example_opcode)}</pre>")
+                    append("<pre>${highlighter.color("PHP Opcodes", doc.exampleOpcode)}</pre>")
                     append("</pre>")
                 }
 

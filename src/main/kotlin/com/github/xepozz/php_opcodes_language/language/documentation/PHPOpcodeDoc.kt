@@ -4,6 +4,6 @@ data class ParameterDoc(
     val name: String,
     val number: Int,
     val description: String,
-    val example_php: String? = null,
-    val example_opcode: String? = null
+    val examplePhp: String? = null,
+    val exampleOpcode: String? = null
 )
