@@ -4,5 +4,6 @@ enum class Primitives {
     bool,
     int,
     string,
-    double;
+    double,
+    `null`,
 }
